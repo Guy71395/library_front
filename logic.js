@@ -1,9 +1,6 @@
-        // MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
-        // MY_SERVER_CUSTOMERS = "https://library-back-a0z7.onrender.com/customers/"
-        // MY_SERVER_LOANS = "https://library-back-a0z7.onrender.com/loans/"
-        MY_SERVER_BOOKS = "http://127.0.0.1:5000/books/"
-        MY_SERVER_CUSTOMERS = "http://127.0.0.1:5000/customers/"
-        MY_SERVER_LOANS = "http://127.0.0.1:5000/loans/"
+        MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
+        MY_SERVER_CUSTOMERS = "https://library-back-a0z7.onrender.com/customers/"
+        MY_SERVER_LOANS = "https://library-back-a0z7.onrender.com/loans/"
         let books = []
         let customers = []
         let loans = []
