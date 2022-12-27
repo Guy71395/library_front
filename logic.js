@@ -1,6 +1,9 @@
-MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
-        MY_SERVER_CUSTOMERS = "https://library-back-a0z7.onrender.com/customers/"
-        MY_SERVER_LOANS = "https://library-back-a0z7.onrender.com/loans/"
+        // MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
+        // MY_SERVER_CUSTOMERS = "https://library-back-a0z7.onrender.com/customers/"
+        // MY_SERVER_LOANS = "https://library-back-a0z7.onrender.com/loans/"
+        MY_SERVER_BOOKS = "http://127.0.0.1:5000/books/"
+        MY_SERVER_CUSTOMERS = "http://127.0.0.1:5000/customers/"
+        MY_SERVER_LOANS = "http://127.0.0.1:5000/loans/"
         let books = []
         let customers = []
         let loans = []
@@ -19,7 +22,7 @@ MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
             <button onclick="addBook()">Add Book</button><hr>
             <h6>Search by Name</h6>
             <input id="sr" onkeyup="searchBookDisplay()">`
-            display_Data.innerHTML = books.data.map(b => `<div><button onclick="delBook(${b.b_id})">DELETE</button> ${b.b_id}: Name: ${b.bName} | Auther: ${b.auther} | Published: ${b.bYear} | Book Type: ${b.bType}</div>`).join("")
+            display_Data.innerHTML = books.data.filter(x => x.active == 1).map(b => `<div><button onclick="delBook(${b.b_id})">DELETE</button> ${b.b_id}: Name: ${b.bName} | Auther: ${b.auther} | Published: ${b.bYear} | Book Type: ${b.bType}</div>`).join("")
         }
 
         const searchCustomersDisplay = () => {
@@ -27,7 +30,7 @@ MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
         }
 
         const buildCustomersDisplay = () => {
-            display_Data.innerHTML = customers.data.map(c => `<div><button onclick="delCust(${c.c_id})">DELETE</button> ${c.c_id}: Name: ${c.cName} | City: ${c.city} | Age: ${c.age}</div>`).join("")
+            display_Data.innerHTML = customers.data.filter(x => x.active == 1).map(c => `<div><button onclick="delCust(${c.c_id})">DELETE</button> ${c.c_id}: Name: ${c.cName} | City: ${c.city} | Age: ${c.age}</div>`).join("")
             display_Gui.innerHTML = `<h1>Customers</h1><hr>
             <h6>Add a Customer to the database</h6>
             Name : <input id="new_customer_name" type="text" required><br>
@@ -91,12 +94,15 @@ MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
                     "bName": new_book_name.value, "auther": new_book_auther.value,
                     "bYear": new_book_year.value, "bType": new_book_type.value
                 })
+                buildBooksDisplay()
             }
         }
 
-        //delete book
+        //put book - change active atribute to false
         const delBook = (id) => {
-            axios.delete(MY_SERVER_BOOKS + id)
+            axios.put(MY_SERVER_BOOKS + id,{
+                "active": false
+            })
         }
 
         //////////////////// CRUD customers /////////////////// 
@@ -107,12 +113,15 @@ MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
                     "cName": new_customer_name.value,
                     "City": new_customer_city.value, "age": new_customer_age.value
                 })
+                buildCustomersDisplay()
             }
         }
 
-        //delete customer
+        //put customer - change active atribute to false
         const delCust = (id) => {
-            axios.delete(MY_SERVER_CUSTOMERS + id)
+            axios.put(MY_SERVER_CUSTOMERS + id, {
+                "active": false
+            })
         }
 
         //////////////////// CRUD loans /////////////////// 
@@ -122,6 +131,7 @@ MY_SERVER_BOOKS = "https://library-back-a0z7.onrender.com/books/"
                 "customer": cust_select.value,
                 "book": book_select.value
             })
+            buildLoansDisplay()
         }
 
         //put loan - change active atribute to false
